@@ -1,0 +1,22 @@
+{
+  "name": "@minaboktor2628/starter-app",
+  "discription": "A starter app with boilerplate using the t3 stack, shadcn-ui, next-auth, and a few handy components, utility functions, and hooks",
+  "version": "0.0.1",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "main": "./dist/index.js",
+  "scripts": {
+    "build": "tsup",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "starter code",
+    "boilerplate"
+  ],
+  "author": "Mina Boktor",
+  "license": "MIT",
+  "devDependencies": {
+    "tsup": "^8.0.2",
+    "typescript": "^5.4.5"
+  }
+}

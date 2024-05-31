@@ -1,4 +1,4 @@
-# Your Package Name
+# Mina's Starter Boilerplate
 
 [//]: # ([![npm version]&#40;https://badge.fury.io/js/your-package-name.svg&#41;]&#40;https://badge.fury.io/js/@minaboktor2628/starter-app&#41;)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)

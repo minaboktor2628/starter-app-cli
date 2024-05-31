@@ -11,7 +11,6 @@ import figlet from "figlet";
 import gradient from "gradient-string";
 
 const sleep = (ms = 100) => new Promise((r) => setTimeout(r, ms));
-let isArgIncludeDot = false;
 
 async function init() {
   welcome({
@@ -37,7 +36,6 @@ async function getProjectNameAndLocation() {
   const isLastArgDot = lastArg === ".";
 
   if (isLastArgDot) {
-    isArgIncludeDot = true;
     const currentDir = process.cwd();
     const dirName = path.basename(currentDir);
     spinner.success({

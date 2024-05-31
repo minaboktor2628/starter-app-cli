@@ -2,13 +2,13 @@
 import welcome from "cli-welcome";
 // @ts-ignore
 import pkg from "./../package.json";
-import figlet from "figlet";
-import gradient from "gradient-string";
 import inquirer from "inquirer";
 import path from "path";
 import { createSpinner } from "nanospinner";
 import chalk from "chalk";
-import simpleGit, { SimpleGit, SimpleGitOptions } from "simple-git";
+import simpleGit from "simple-git";
+import figlet from "figlet";
+import gradient from "gradient-string";
 
 const sleep = (ms = 100) => new Promise((r) => setTimeout(r, ms));
 let isArgIncludeDot = false;
@@ -28,9 +28,9 @@ async function init() {
   });
   await sleep();
 }
-async function askProjectName() {
+async function getProjectNameAndLocation() {
   const spinner = createSpinner(`Checking input...`).start();
-  await sleep(500);
+  await sleep(2000);
 
   // Check if the last argument is "."
   const lastArg = process.argv[process.argv.length - 1];
@@ -57,10 +57,30 @@ async function askProjectName() {
   }
 }
 
+async function cloneRepo(projectName: string) {
+  const git = simpleGit();
+
+  const repoUrl = "https://github.com/minaboktor2628/starter-app.git"; // Replace with your repository URL
+  const localPath = path.join(process.cwd(), projectName);
+
+  const spinner = createSpinner(`Cloning repository...`).start();
+  try {
+    await git.clone(repoUrl, localPath);
+    spinner.success({
+      text: `Repository cloned successfully to ${localPath}`,
+    });
+  } catch (error) {
+    spinner.error({
+      text: `Failed to clone the repository: ${error}`,
+    });
+  }
+}
+
 async function main() {
   await init();
 
-  await askProjectName();
+  const projectName = await getProjectNameAndLocation();
+  await cloneRepo(projectName);
 }
 
 main().then(() => process.exit(0));

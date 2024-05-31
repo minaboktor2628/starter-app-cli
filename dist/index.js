@@ -7,13 +7,15 @@ import welcome from "cli-welcome";
 var package_default = {
   name: "@minaboktor2628/starter-app",
   description: "A starter app with boilerplate using the t3 stack, shadcn-ui, next-auth, and a few handy components, utility functions, and hooks",
-  version: "0.0.1",
+  version: "0.0.7",
   module: "./dist/index.mjs",
   type: "module",
   types: "./dist/index.d.ts",
   main: "./dist/index.js",
+  bin: "./dist/index.js",
   scripts: {
     build: "tsup && node ./dist/index.js  ",
+    publish: "npm publish --access-public",
     test: 'echo "Error: no test specified" && exit 1'
   },
   keywords: [
@@ -39,18 +41,21 @@ var package_default = {
     typescript: "^5.4.5"
   },
   dependencies: {
-    "cli-welcome": "^2.2.3"
+    "cli-welcome": "^2.2.3",
+    "simple-git": "^3.24.0"
   }
 };
 
 // src/index.ts
-import figlet from "figlet";
-import gradient from "gradient-string";
 import inquirer from "inquirer";
 import path from "path";
 import { createSpinner } from "nanospinner";
 import chalk from "chalk";
+import simpleGit from "simple-git";
+import figlet from "figlet";
+import gradient from "gradient-string";
 var sleep = (ms = 100) => new Promise((r) => setTimeout(r, ms));
+var isArgIncludeDot = false;
 async function init() {
   welcome({
     title: "Next.js starter app",
@@ -66,12 +71,13 @@ async function init() {
   });
   await sleep();
 }
-async function askProjectName() {
+async function getProjectNameAndLocation() {
   const spinner = createSpinner(`Checking input...`).start();
-  await sleep(500);
+  await sleep(2e3);
   const lastArg = process.argv[process.argv.length - 1];
   const isLastArgDot = lastArg === ".";
   if (isLastArgDot) {
+    isArgIncludeDot = true;
     const currentDir = process.cwd();
     const dirName = path.basename(currentDir);
     spinner.success({
@@ -85,15 +91,30 @@ async function askProjectName() {
       name: "project_name",
       type: "input",
       message: "Whats your projects name?\n",
-      validate: function(input) {
-        return input.trim() !== "";
-      }
+      default: path.basename(process.cwd())
     });
     return answer.project_name;
   }
 }
+async function cloneRepo(projectName) {
+  const git = simpleGit();
+  const repoUrl = "https://github.com/minaboktor2628/starter-app.git";
+  const localPath = path.join(process.cwd(), projectName);
+  const spinner = createSpinner(`Cloning repository...`).start();
+  try {
+    await git.clone(repoUrl, localPath);
+    spinner.success({
+      text: `Repository cloned successfully to ${localPath}`
+    });
+  } catch (error) {
+    spinner.error({
+      text: `Failed to clone the repository: ${error}`
+    });
+  }
+}
 async function main() {
   await init();
-  await askProjectName();
+  const projectName = await getProjectNameAndLocation();
+  await cloneRepo(projectName);
 }
 main().then(() => process.exit(0));

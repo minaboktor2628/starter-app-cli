@@ -1,6 +1,6 @@
 # Mina's Starter Boilerplate
 
-[![npm version](https://badge.fury.io/js/your-package-name.svg)](https://badge.fury.io/js/@minaboktor2628/starter-app)
+[![npm version](https://badge.fury.io/js/%40minaboktor2628%2Fstarter-app.svg)](https://badge.fury.io/js/%40minaboktor2628%2Fstarter-app)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![GitHub Repository](https://img.shields.io/badge/GitHub-Repository-blue?logo=github)](https://github.com/minaboktor2628/starter-app-cli)
 

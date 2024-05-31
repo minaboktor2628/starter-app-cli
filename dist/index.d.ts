@@ -1,3 +1,1 @@
-declare function sayhello(): void;
-
-export { sayhello };
+#!/usr/bin/env node

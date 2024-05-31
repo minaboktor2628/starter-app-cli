@@ -1,32 +1,99 @@
-"use strict";
-var __defProp = Object.defineProperty;
-var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
-var __getOwnPropNames = Object.getOwnPropertyNames;
-var __hasOwnProp = Object.prototype.hasOwnProperty;
-var __export = (target, all) => {
-  for (var name in all)
-    __defProp(target, name, { get: all[name], enumerable: true });
-};
-var __copyProps = (to, from, except, desc) => {
-  if (from && typeof from === "object" || typeof from === "function") {
-    for (let key of __getOwnPropNames(from))
-      if (!__hasOwnProp.call(to, key) && key !== except)
-        __defProp(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });
-  }
-  return to;
-};
-var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
+#!/usr/bin/env node
 
 // src/index.ts
-var src_exports = {};
-__export(src_exports, {
-  sayhello: () => sayhello
-});
-module.exports = __toCommonJS(src_exports);
-function sayhello() {
-  console.log("hello");
+import welcome from "cli-welcome";
+
+// package.json
+var package_default = {
+  name: "@minaboktor2628/starter-app",
+  description: "A starter app with boilerplate using the t3 stack, shadcn-ui, next-auth, and a few handy components, utility functions, and hooks",
+  version: "0.0.1",
+  module: "./dist/index.mjs",
+  type: "module",
+  types: "./dist/index.d.ts",
+  main: "./dist/index.js",
+  scripts: {
+    build: "tsup && node ./dist/index.js  ",
+    test: 'echo "Error: no test specified" && exit 1'
+  },
+  keywords: [
+    "starter code",
+    "boilerplate"
+  ],
+  author: "Mina Boktor",
+  license: "MIT",
+  devDependencies: {
+    "@types/cli-welcome": "^2.2.2",
+    "@types/figlet": "^1.5.8",
+    "@types/gradient-string": "^1.1.6",
+    "@types/inquirer": "^9.0.7",
+    "@types/node": "^20.12.13",
+    chalk: "^5.3.0",
+    "chalk-animation": "^2.0.3",
+    figlet: "^1.7.0",
+    "gradient-string": "^2.0.2",
+    inquirer: "^9.2.22",
+    nanospinner: "^1.1.0",
+    prettier: "^3.2.5",
+    tsup: "^8.0.2",
+    typescript: "^5.4.5"
+  },
+  dependencies: {
+    "cli-welcome": "^2.2.3"
+  }
+};
+
+// src/index.ts
+import figlet from "figlet";
+import gradient from "gradient-string";
+import inquirer from "inquirer";
+import path from "path";
+import { createSpinner } from "nanospinner";
+import chalk from "chalk";
+var sleep = (ms = 100) => new Promise((r) => setTimeout(r, ms));
+async function init() {
+  welcome({
+    title: "Next.js starter app",
+    tagLine: `by ${package_default.author}`,
+    description: package_default.description,
+    version: package_default.version,
+    bgColor: "#204216",
+    color: "#000000",
+    bold: true
+  });
+  figlet("Mina ' s   Boilerplate", (err, data) => {
+    console.log(gradient.pastel.multiline(data));
+  });
+  await sleep();
 }
-// Annotate the CommonJS export names for ESM import in node:
-0 && (module.exports = {
-  sayhello
-});
+async function askProjectName() {
+  const spinner = createSpinner(`Checking input...`).start();
+  await sleep(500);
+  const lastArg = process.argv[process.argv.length - 1];
+  const isLastArgDot = lastArg === ".";
+  if (isLastArgDot) {
+    const currentDir = process.cwd();
+    const dirName = path.basename(currentDir);
+    spinner.success({
+      text: `Using current directory's name as project name: ${chalk.bold.bgGreen(dirName)}`
+    });
+    return dirName;
+  } else {
+    spinner.stop();
+    spinner.clear();
+    const answer = await inquirer.prompt({
+      name: "project_name",
+      type: "input",
+      message: "Whats your projects name?\n",
+      validate: function(input) {
+        return input.trim() !== "";
+      }
+    });
+    return answer.project_name;
+  }
+}
+async function main() {
+  await init();
+  await askProjectName();
+}
+main().then(() => process.exit(0));

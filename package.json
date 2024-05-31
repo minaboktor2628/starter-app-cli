@@ -1,12 +1,13 @@
 {
   "name": "@minaboktor2628/starter-app",
-  "discription": "A starter app with boilerplate using the t3 stack, shadcn-ui, next-auth, and a few handy components, utility functions, and hooks",
+  "description": "A starter app with boilerplate using the t3 stack, shadcn-ui, next-auth, and a few handy components, utility functions, and hooks",
   "version": "0.0.1",
   "module": "./dist/index.mjs",
+  "type": "module",
   "types": "./dist/index.d.ts",
   "main": "./dist/index.js",
   "scripts": {
-    "build": "tsup",
+    "build": "tsup && node ./dist/index.js  ",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
@@ -16,7 +17,23 @@
   "author": "Mina Boktor",
   "license": "MIT",
   "devDependencies": {
+    "@types/cli-welcome": "^2.2.2",
+    "@types/figlet": "^1.5.8",
+    "@types/gradient-string": "^1.1.6",
+    "@types/inquirer": "^9.0.7",
+    "@types/node": "^20.12.13",
+    "chalk": "^5.3.0",
+    "chalk-animation": "^2.0.3",
+    "figlet": "^1.7.0",
+    "gradient-string": "^2.0.2",
+    "inquirer": "^9.2.22",
+    "nanospinner": "^1.1.0",
+    "prettier": "^3.2.5",
     "tsup": "^8.0.2",
     "typescript": "^5.4.5"
+  },
+  "dependencies": {
+    "cli-welcome": "^2.2.3",
+    "simple-git": "^3.24.0"
   }
 }

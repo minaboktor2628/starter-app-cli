@@ -1,7 +1,7 @@
 {
   "name": "@minaboktor2628/starter-app",
   "description": "A starter app with boilerplate using the t3 stack, shadcn-ui, next-auth, and a few handy components, utility functions, and hooks",
-  "version": "0.0.8",
+  "version": "1.0.0",
   "module": "./dist/index.mjs",
   "type": "module",
   "types": "./dist/index.d.ts",

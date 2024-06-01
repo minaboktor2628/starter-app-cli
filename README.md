@@ -8,6 +8,8 @@
 
 A comprehensive npm package for building a T3 (TypeScript, TailwindCSS, and Trpc) application with Next-Auth, Prisma, and Next.js. This package includes a few custom helper functions and hooks to streamline your development process.
 
+This clones this project onto your computer.
+[![GitHub Repository](https://img.shields.io/badge/GitHub-Repository-blue?logo=github)](https://github.com/minaboktor2628/starter-app)
 ## Features
 
 - Integrates seamlessly with TypeScript, Prisma, Trpc, Next.js, Shadcn UI, and TailwindCSS.

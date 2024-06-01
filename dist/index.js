@@ -7,12 +7,16 @@ import welcome from "cli-welcome";
 var package_default = {
   name: "@minaboktor2628/starter-app",
   description: "A starter app with boilerplate using the t3 stack, shadcn-ui, next-auth, and a few handy components, utility functions, and hooks",
-  version: "0.0.7",
+  version: "1.1.0",
   module: "./dist/index.mjs",
   type: "module",
   types: "./dist/index.d.ts",
   main: "./dist/index.js",
   bin: "./dist/index.js",
+  repository: {
+    type: "git",
+    url: "https://github.com/minaboktor2628/starter-app-cli"
+  },
   scripts: {
     build: "tsup && node ./dist/index.js  ",
     publish: "npm publish --access-public",
@@ -30,17 +34,17 @@ var package_default = {
     "@types/gradient-string": "^1.1.6",
     "@types/inquirer": "^9.0.7",
     "@types/node": "^20.12.13",
+    prettier: "^3.2.5",
+    tsup: "^8.0.2",
+    typescript: "^5.4.5"
+  },
+  dependencies: {
     chalk: "^5.3.0",
     "chalk-animation": "^2.0.3",
     figlet: "^1.7.0",
     "gradient-string": "^2.0.2",
     inquirer: "^9.2.22",
     nanospinner: "^1.1.0",
-    prettier: "^3.2.5",
-    tsup: "^8.0.2",
-    typescript: "^5.4.5"
-  },
-  dependencies: {
     "cli-welcome": "^2.2.3",
     "simple-git": "^3.24.0"
   }
@@ -55,7 +59,6 @@ import simpleGit from "simple-git";
 import figlet from "figlet";
 import gradient from "gradient-string";
 var sleep = (ms = 100) => new Promise((r) => setTimeout(r, ms));
-var isArgIncludeDot = false;
 async function init() {
   welcome({
     title: "Next.js starter app",
@@ -77,7 +80,6 @@ async function getProjectNameAndLocation() {
   const lastArg = process.argv[process.argv.length - 1];
   const isLastArgDot = lastArg === ".";
   if (isLastArgDot) {
-    isArgIncludeDot = true;
     const currentDir = process.cwd();
     const dirName = path.basename(currentDir);
     spinner.success({

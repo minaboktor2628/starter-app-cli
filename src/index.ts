@@ -29,7 +29,7 @@ async function init() {
 }
 async function getProjectNameAndLocation() {
   const spinner = createSpinner(`Checking input...`).start();
-  await sleep(2000);
+  await sleep(1000);
 
   // Check if the last argument is "."
   const lastArg = process.argv[process.argv.length - 1];
